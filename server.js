@@ -55,10 +55,16 @@ app.put('/api/todos/:id', function (req, res, nextFn) {
     console.log(todoList)
 })
 
-// // DELETE /api/todos/:id
-// app.delete('/api/todos/:id', function (req, res, nextFn) {
-//     console.log('delting the following node', req.todoList.id)
-// })
+// DELETE /api/todos/:id
+app.delete('/api/todos/:id', function (req, res, nextFn) {
+    const myID = req.params.id
+    for (let i = 0; i < todoList.length; i++) {
+        if (todoList[i].id == myID) {
+            todoList.splice(i,1)
+        }
+    }
+    console.log(todoList, '...Delete Function')
+})
 
 app.listen(3000, function(){
     console.log('Todo List API is now listening on port 3000...');
