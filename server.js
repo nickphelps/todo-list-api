@@ -10,10 +10,6 @@ var todoList = [
         id: 1,
         todo: "Implement a REST API"
     },
-    {
-        id: 2,
-        todo: "Implement a REST API"
-    }
 ];
 
 // GET /api/todos
@@ -27,8 +23,6 @@ app.get('/api/todos/:id', function(req,res,nextFn) {
     // console.log('todos at id:', req.params.id) //my parameter at the end of the url
     //loop through and see where the id matches up. Returning the whole id 1 object
     const myID = req.params.id //end of url
-    console.log('myID...', myID)
-
     let myReturnedArray = []
 
     for (let i = 0; i < todoList.length; i++) {
@@ -39,15 +33,27 @@ app.get('/api/todos/:id', function(req,res,nextFn) {
     console.log(myReturnedArray)
 }) //get id
 
-// // POST /api/todos -> use POSTMAN -> send  back to the user what the id is
+// POST /api/todos -> use POSTMAN -> create another object in array
 app.post('/api/todos', function (req, res, nextFn) {
-    console.log('creating a todo list node...', req.todoList)
+    // console.log('creating a todo list node...', todoList)
+    myAddedObject = req.body
+    console.log(todoList.push(myAddedObject))
+    console.log('My complete list...',todoList)
 })
 
-// // PUT /api/todos/:id - > you give the id an object and it updates the array
-// app.put('/api/todos/:id', function (req, res, nextFn) {
-//     console.log('changing the id of a node', req.todoList.id) //???? How do i reference a node of the dynamic id>>
-// })
+// PUT /api/todos/:id - > you give the id an object and it updates the array node
+app.put('/api/todos/:id', function (req, res, nextFn) {
+    const myID = req.params.id
+    const updatedText = req.body.todo
+
+    for (let i = 0; i < todoList.length; i++) {
+        if (todoList[i].id == myID) {
+            todoList[i].todo = updatedText
+        }
+    }
+    console.log('!!!!!!!!!!!!!!!!')
+    console.log(todoList)
+})
 
 // // DELETE /api/todos/:id
 // app.delete('/api/todos/:id', function (req, res, nextFn) {
